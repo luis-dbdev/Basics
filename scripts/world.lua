@@ -10,6 +10,10 @@ local math, table           =   math, table
 local Player                =   require("scripts.player")
 local levelReader           =   require("util.levelreader")
 local split                 =   require("util.split")
+local l1                    =   require("maps.init")
+
+print(l1.level)
+print(l1.title)
 
 function newWorld(screenSize)
     -------------------------------------------------------------------
