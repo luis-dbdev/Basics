@@ -10,10 +10,14 @@ local math, table           =   math, table
 local Player                =   require("scripts.player")
 local levelReader           =   require("util.levelreader")
 local split                 =   require("util.split")
-local l1                    =   require("maps.init")
+local l1                    =   require "maps"
 
 print(l1.level)
 print(l1.title)
+
+World         = { g       = 10,
+                  level   = "level1",
+                }
 
 function newWorld(screenSize)
     -------------------------------------------------------------------
@@ -70,59 +74,9 @@ function newWorld(screenSize)
     -----------------   UPDATE  ---------------------------------------
     -------------------------------------------------------------------
     function world:update(dt)
-        for _, player in ipairs(self.players) do
-            player:update(dt)
-            
-            -- Snap players
-            if player.x - player.r < world.offset then
-                player.x = world.offset + player.r
-            elseif player.x + player.r > math.floor(self.map.map_res[1]*world.scale) + world.offset then
-                player.x = math.floor(self.map.map_res[1]*world.scale) + world.offset - player.r
-            end
-            if player.y < 0 then
-                player.y = 0
-            end
-            
-            -- World collision
-            local column = math.floor((player.x-world.offset)/(20*world.scale)) + 1
-            local row = math.floor(player.y/(20*world.scale)) + 1
-            local width = math.floor(2*player.r/(20*world.scale))
-            
-            if self.map.data[row][column] == 1 then
-                local i,j = row, column
-                local n = 1
-                while true do
-                    if self.map.data[i][j-n] == 0 then
-                        print("left")
-                        player.x = (j-n)*math.floor(20*world.scale) - player.r
-                        break
-                    elseif self.map.data[i][j+n] == 0 then
-                        print("right")
-                        player.x = (j+n)*math.floor(20*world.scale) + player.r
-                        break
-                    end
-                    n = n + 1
-                    if j + n > table.getn(self.map.data[1]) or j - n < table.getn(self.map.data[1]) then
-                        player.x = world.offset
-                        break
-                    end
-                end
-            end
-            
-            local floor = screenHeight
-            for i, rows in ipairs(self.map.data) do
-                if rows[column] == 1 then
-                    floor = (i-1)*math.floor(20*world.scale)
-                    break
-                elseif rows[column+width] == 1 then
-                    floor = (i-1)*math.floor(20*world.scale)
-                    break
-                end
-            end
-            if player.y + player.r > floor then
-                player.y = floor - player.r
-            end
-        end
+      for _, player in ipairs(self.players) do
+        player:update(dt)
+      end
     end
     
     --------------------------------------------------------------------

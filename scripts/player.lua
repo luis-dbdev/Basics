@@ -21,7 +21,7 @@ function new(x, y)
     player = {name = "player_" .. tostring(i),
               x    = x,
               y    = y,
-              r    = 20,
+              r    = 30,
               bbox = 20}
     i = i + 1
     
@@ -36,7 +36,7 @@ function new(x, y)
         if keyboard.isDown("right") then
             self.x = self.x + 10
         end
-        self.y = self.y + world.g
+        --self.y = self.y + world.g
     end
     
     ---------------------------------------------------------
