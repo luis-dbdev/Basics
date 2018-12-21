@@ -1,8 +1,6 @@
 -- Maps
 
-Levels          =   require "maps.levels"
+local Levels          =   require "maps.levels"
+--Levels.collision       =   require "maps.tile_collision"
 
-level1      =   Levels.new()
-level1:load()
-
-return level1
+return Levels

@@ -5,7 +5,7 @@ local levelReader           =   require("util.levelreader")
 local split                 =   require("util.split")
 
 -- Performance binds
-local setmetatable          =   setmetatable
+
 
 -- Default
 local Level                 = 
@@ -43,18 +43,37 @@ function Level:load(level)
   for i, line in ipairs(self.data) do
       if i == 1 then
           self.title = line
+          
       elseif i == 2 then
-          self.grid_size = split(line, ",")
+        self.grid_size = {}
+        s = split(line, ",")
+        
+        for i, num in ipairs(s) do
+          self.grid_size[i] = tonumber(num)
+        end
+        
       elseif i == 3 then
-          self.tile_size = split(line, ",")
+        self.tile_size = {}
+        s = split(line, ",")
+        
+        for i, num in ipairs(s) do
+          self.tile_size[i] = tonumber(num)
+        end
+        
       elseif i == 4 then
-          self.res = split(line, ",")
+        self.res = {}
+        s = split(line, ",")
+        
+        for i, num in ipairs(s) do
+          self.res[i] = tonumber(num)
+        end
+        
       else
           temp[i-4] = {}
           s = split(line, ",")
           
           for j, char in ipairs(s) do
-              temp[i-4][j] = tonumber(char)
+            temp[i-4][j] = tonumber(char)
           end
       end
   end
